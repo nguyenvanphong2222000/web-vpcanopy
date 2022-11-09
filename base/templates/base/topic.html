@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    #home {
+        position: absolute;
+        left: 0px;
+        top: 72px;
+        height: 100vh;
+        width: 100vw;
+        /* background-color: #F6D565; */
+    }
+
+    .text {
+        position: absolute;
+        left: 50px;
+        top: 120px;
+    }
+
+    .topic {
+        position: absolute;
+        left: 50px;
+        top: 80px;
+    }
+
+    .newtopic {
+        position: absolute;
+        left: 50px;
+        top: 180px;
+    }
+</style>
+
+<div class="home ">
+    <p class="topic">Bài viết: {{topic}}</p>
+    <div class="text">
+        {{topic.content|safe}}
+
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+                    <div class="card-body p-4">
+
+                        <form class="card mb-4" action="{% url 'base:new_entry' topic.id %}" method='post'>
+                            {% csrf_token %}
+                            <p>
+                                <textarea class="form-control" placeholder="Type comment..." name="text" cols="80"
+                                    rows="2" required="" id="id_text"></textarea>
+                            </p>
+                            <button class="btn btn-primary col-4 " name="submit">thêm bình luận</button>
+                        </form>
+                        {% for entry in entries %}
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p>{{ entry.text|linebreaks }}</p>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex flex-row align-items-center">
+
+                                        <img src="https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg" alt="avatar" width="25"
+                                            height="25" />
+                                        <p class="small mb-0 ms-2">{{ entry.owner }}</p>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <p class="small text-muted mb-0" style="max-height:5px">{{entry.date_added|date:'M d, Y H:i'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <li>
+                            Chưa có bình luận nào
+                        </li>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

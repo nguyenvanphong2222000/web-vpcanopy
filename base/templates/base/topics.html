@@ -1,0 +1,42 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+    <style>
+        .home{
+                position: absolute;
+                left: 0px;
+                top: 72px;         
+                height: 100vh;
+                width: 100vw;
+                background-color: #F6D565;
+            }
+        .text{
+            position: absolute;
+            left: 50px;
+            top: 120px;
+        }
+        .topic{
+            position: absolute;
+            left: 50px;
+            top: 80px;
+        }
+        .newtopic{
+            position: absolute;
+            left: 50px;
+            top: 180px;
+        }
+    </style>
+    <img src="{% static 'images/topic_background.jpg'%}"  class="home">
+    <p class="topic"> Bài viết</p>
+    <ul class="text">
+        {% for topic in topics %}
+            <li > 
+                <a href="{% url 'base:topic' topic.id %}">{{ topic }}</a> 
+            </li> 
+        {% empty %}
+            <li>No topics have been added yet.</li>
+        {% endfor %}
+    </ul>
+    
+
+{% endblock content %}

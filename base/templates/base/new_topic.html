@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+ <p>Thêm bài viết mới:</p>
+
+    <form action="{% url 'base:new_topic' %}" method='post'>
+    {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">Thêm bài viết</button>
+    </form>
+
+{% endblock content %}
